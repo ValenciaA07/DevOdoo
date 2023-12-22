@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--VISTA FORMULARIO-->
+    <!--CONFIGURACION-->
+    <record id="View_Operadores_lista_Form" model="ir.ui.view">
+        <field name="name">Operadores_list_Gsimec</field>
+        <field name="model">operadores.list</field>
+        <field name="arch" type="xml">
+            <!--CAMPOS (CONTENIDO DE VISTA)-->
+            <form string="Mantenimiento de Choferes">
+                <header>
+                    <button name="btn_registrar" type="object" class="btn-primary" string="REGISTRAR" attrs="{'invisible':[('status_registrado','=',True)]}"/>
+                    <button name="btn_actualizar" type="object" class="btn-primary" string="ACTUALIZAR" attrs="{'invisible':[('status_registrado','=',False)]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder='Nombre del chofer' attrs="{'readonly':[('status_registrado','=',True)]}"></field>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="ine" placeholder='Clave de Elector 18 caracteres o NA' ></field>
+                        <field name="licencia" placeholder='Numero de licencia de conducir 12 caracteres o NA'></field>
+                        <field name="curp" placeholder='18 caracteres'></field>
+                        <field name="estatus"></field>
+                        <field name="fecha_alta"></field>
+                        <field name="fecha_modificacion"></field>
+                        <field name="comentarios" placeholder='Motivo de Inactivacion'></field>
+                        <field name="categoria"></field>
+                        <field name="status_registrado"></field>                        
+                    </group>
+                </sheet>
+                <!--C H A T T E R-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+     <!--V I S T A   L I S T A-->
+    <record id="View_operadores_lst_tree" model="ir.ui.view">
+        <field name="name">Operadores_list_Gsimec</field>
+        <field name="model">operadores.list</field>
+        <field name="arch" type="xml">
+
+            <!--C O N T E N I D O   V I S T A-->
+            <tree string="Mantenimiento de Choferes">
+                <field name="estatus"></field>
+                <field name="name"></field>
+                <field name="ine"></field>
+                <field name="licencia"></field>
+                <field name="curp"></field>
+                <field name="comentarios"></field>
+                <field name="fecha_alta"></field>
+                <field name="fecha_modificacion"></field>                 
+            </tree>
+        </field>
+    </record>
+      <!-- CONFIGURACION DE ACCION DE VENTANA-->
+    <record id="accion_operadores_list" model="ir.actions.act_window">
+        <field name="name">MANTENIMIENTO DE CHOFERES</field>
+        <field name="res_model">operadores.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Mantenimiento de Choferes" id="menu_operadores_lista" parent="stock.menu_stock_root" action="accion_operadores_list" sequence="15"/>
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--V I S T A   F O R M U L A R I O-->
+    <record id="view_bascula_form" model="ir.ui.view">
+        <field name="name">bascula.form.gsimec</field>
+        <field name="model">bascula</field>
+        <field name="arch" type="xml">
+            <!--C O N T E N I D O   V I S T A-->
+            <form string="Bascula" create="0">
+                <header>
+                    <button name="btn_peso_bruto" type="object" class="btn-primary" string="Registrar Peso Bruto" attrs="{'invisible':['|','|','|','|','|','|',('paso_siguiente','!=', False),('estatus_vigilancia_b', '=','stts_ev'), ('estatus_vigilancia_b', '=','stts_pr'),('estatus_camion_b', '=', False),('estatus_camion_b', '=','stts_b2'), ('estatus_camion_b', '=','stts_cd'), ('estatus_camion_b', '=','stts_v2') ]}"/>
+                    <button name="btn_ultima_pesada" type="object" class="btn-primary" string="Ultima Pesada" attrs="{'invisible': ['|','|','|','|','|','|', ('paso_siguiente', '!=',False), ('estatus_vigilancia_b', '=','stts_ev'), ('estatus_vigilancia_b', '=','stts_pr'), ('estatus_camion_b', '=', False), ('estatus_camion_b', '=','stts_b1'), ('estatus_camion_b', '=','stts_cd'), ('estatus_camion_b', '=','stts_v2')]}"/>
+                    <button name="btn_nuevo_ciclo" type="object" class="btn-primary" string="Pesar/Nuevo Ciclo" attrs="{'invisible': ['|','|','|','|','|','|', ('paso_siguiente', '!=',False), ('estatus_vigilancia_b', '=','stts_ev'), ('estatus_vigilancia_b', '=','stts_pr'), ('estatus_camion_b', '=', False), ('estatus_camion_b', '=','stts_b1'), ('estatus_camion_b', '=','stts_cd'), ('estatus_camion_b', '=','stts_v2')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_tittle">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group name="group_bascula">
+                        <group name="col1">
+                            <field name="referencia_vigilancia" readonly="1" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="placas_vehiculo" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="nombre_chofer" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="estatus_camion_b"/>
+                            <field name="estatus_vigilancia_b"/>
+                            <field name="fecha_primer_pesada_b" readonly="1"/>
+                            <field name="fecha_segunda_pesada_b" readonly="1"/>
+                            <field name="nombre_basculista_b" readonly="1" options="{'no_create': True, 'no_open':True}" widget="many2one_avatar_user"/>
+                            <field name="company_id" readonly="1" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="notas_basculista" widget="html" attrs="{'readonly':['|','|','|','|',('estatus_camion_b','=', 'stts_cd'), ('estatus_camion_b', '=','stts_ra'), ('estatus_camion_b', '=','stts_v2'), ('estatus_camion_b', '=', 'stts_bc'), ('estatus_camion_b', '=', False)]}"/>
+                        </group>
+                        <group name="col2">
+                            <field name="producto_remisionado_b" readonly="1" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="producto_registrado_b" readonly="1" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="peso_bruto_b" required="1" attrs="{'readonly':[('estatus_camion_b','!=','stts_b1')]}"/>
+                            <field name="peso_tara_b" required="1" attrs="{'readonly':[('estatus_camion_b','!=','stts_b2')]}"/>
+                            <field name="peso_neto_b" required="1" readonly="1"/>
+                            <field name="impureza_porcentaje_b"/>
+                            <field name="impureza_cantidad_b"/>
+                            <field name="peso_neto_pagar_b"/>
+                            <field name="paso_siguiente" readonly="1" invisible="1"/>
+                            <field name="producto_almacen_b" invisible="1"/>
+                            <field name="chatarra_clasificada_b" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <!--C H A T T E R-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--V I S T A   L I S T A-->
+    <record id="view_bascula_tree" model="ir.ui.view">
+        <field name="name">bascula.tree.gsimec</field>
+        <field name="model">bascula</field>
+        <field name="arch" type="xml">
+            <!--C O N T E N I D O   V I S T A-->
+            <tree string="Bascula" create="0">
+                <field name="name"/>
+                <field name="referencia_vigilancia"/>
+                <field name="nombre_chofer"/>
+                <field name="placas_vehiculo"/>
+                <field name="estatus_camion_b"/>
+                <field name="nombre_basculista_b"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <!-- A C T I O N   W I N D O W -->
+    <record id="bascula_action" model="ir.actions.act_window">
+        <field name="name">Bascula</field>
+        <field name="res_model">bascula</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- M E N U   I T E M -->
+    <menuitem name="Bascula" id="menu_bascula" parent="stock.menu_stock_root" action="bascula_action" sequence="10"/>
+</odoo>

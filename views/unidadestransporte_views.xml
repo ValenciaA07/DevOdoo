@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--VISTA FORMULARIO-->
+    <!--CONFIGURACION-->
+    <record id="View_Unidadestransportelist_Form" model="ir.ui.view">
+        <field name="name">unidadestransportelist_Gsimec</field>
+        <field name="model">unidadestransporte.list</field>
+        <field name="arch" type="xml">
+            <!--CAMPOS (CONTENIDO DE VISTA)-->
+            <form string="Mantenimiento de Unidades de Transporte">
+                <header>
+                    <!-- <button name="btn_registrar" type="object" class="btn-primary" string="GUARDAR"/> -->
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder='Placas sin guiones, ni espacios, ni diagonales' attrs="{'readonly':[('status_registrado','=',True)]}"></field>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="tipo_unidad"></field>
+                        <field name="modelo"></field>
+                        <field name="configuracion"></field>
+                        <field name="activo"></field>
+                        <field name="comentarios" placeholder='Color de unidad, situacion especial, etc'></field>
+                        <field name="comentarios2" placeholder='Motivo de Inactivar la Unidad'></field>
+                        <field name="fecha_alta"></field>
+                        <field name="fecha_modificacion"></field>
+                        <field name="status_registrado"></field>
+                    </group>
+                </sheet>
+                <!--C H A T T E R-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--V I S T A   L I S T A-->
+    <record id="View_unidadestransporte_lst_tree" model="ir.ui.view">
+        <field name="name">unidadestransporte_list_Gsimec</field>
+        <field name="model">unidadestransporte.list</field>
+        <field name="arch" type="xml">
+
+            <!--C O N T E N I D O   V I S T A-->
+            <tree string="Mantenimiento de Unidades de Transporte">
+                <field name="name"></field>
+                <field name="fecha_alta"></field>
+                <field name="fecha_modificacion"></field>
+                <field name="configuracion"></field>
+                <field name="comentarios"></field>
+            </tree>
+        </field>
+    </record>
+    <!-- CONFIGURACION DE ACCION DE VENTANA-->
+    <record id="accion_unidades_list" model="ir.actions.act_window">
+        <field name="name">MANTENIMIENTO UNIDADES</field>
+        <field name="res_model">unidadestransporte.list</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Mantenimiento de Unidades" id="menu_unidades_lista" parent="stock.menu_stock_root" action="accion_unidades_list" sequence="18"/>
+</odoo>

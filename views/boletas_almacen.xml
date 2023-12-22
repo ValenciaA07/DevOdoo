@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--V I S T A   F O R M U L A R I O-->
+    <record id="view_boleta_almacen_form" model="ir.ui.view">
+        <field name="name">boleta_almacen.form.gsimec</field>
+        <field name="model">boletas.almacen</field>
+        <field name="arch" type="xml">
+            <!--C O N T E N I D O   V I S T A-->
+            <form string="Boleta Almacen" create="0">
+                <header>
+                    <button name="btn_registrar_producto" type="object" class="btn-primary" string="Registrar Producto" attrs="{'invisible': ['|', ('estatus_vigilancia_alm', '=','false'), ('estatus_camion_alm', '!=','stts_cd')]}"/>
+                    <button name="btn_confirmar" type="object" class="btn-primary" string="Confirmar" attrs="{'invisible': ['|', ('estatus_vigilancia_alm', '=','false'), ('estatus_camion_alm', '!=','stts_ra')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_tittle">
+                        <h1>
+                            <field name="name"></field>
+                        </h1>
+                    </div>
+                    <group name="group_boleta_alm">
+                        <group name="col1">
+                            <field name="ciclo_camion_id" readonly="1" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="pase_acceso_alm" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="estatus_camion_alm"/>
+                            <field name="producto_recibido_alm" options="{'no_create': True, 'no_open':True}" attrs="{'readonly':[('estatus_camion_alm','!=','stts_cd')]}"/>
+                            <field name="estatus_vigilancia_alm"/>
+                            <field name="nombre_almacen" attrs="{'readonly':[('estatus_camion_alm','!=','stts_cd')]}"/>
+                            <field name="fecha_inicial" readonly="1"/>
+                            <field name="fecha_final" readonly="1"/>
+                            <field name="notas_almacen" attrs="{'readonly':[('estatus_camion_alm','!=','stts_ra')]}"/>
+                        </group>
+                        <group name="col2">
+                            <field name="nombre_almacenista" readonly="1" widget="many2one_avatar_user"></field>
+                            <field name="company_id" readonly="1" options="{'no_create': True, 'no_open':True}"></field>
+                        </group>
+                    </group>
+                </sheet>
+                <!--C H A T T E R-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--V I S T A   L I S T A-->
+    <record id="view_boleta_almacen_tree" model="ir.ui.view">
+        <field name="name">boleta_almacen.tree.gsimec</field>
+        <field name="model">boletas.almacen</field>
+        <field name="arch" type="xml">
+            <!--C O N T E N I D O   V I S T A-->
+            <tree string="Boletas Almacen" create="0">
+                <field name="name"/>
+                <field name="pase_acceso_alm"/>
+                <field name="nombre_almacenista" options="{'no_open':True}"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+    <!-- A C T I O N   W I N D O W -->
+    <record id="boleta_almacen_action" model="ir.actions.act_window">
+        <field name="name">Boleta Almacen</field>
+        <field name="res_model">boletas.almacen</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- M E N U   I T E M -->
+    <menuitem name="Boletas Almacen" id="menu_boleta_almacen" parent="stock.menu_stock_root" action="boleta_almacen_action" sequence="10"/> 
+ </odoo>

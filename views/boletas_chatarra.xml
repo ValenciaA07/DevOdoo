@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--V I S T A   F O R M U L A R I O-->
+    <record id="view_boletas_chatarra_form" model="ir.ui.view">
+        <field name="name">boletas_chatarra.form.gsimec</field>
+        <field name="model">boletas.chatarra</field>
+        <field name="arch" type="xml">
+            <!--C O N T E N I D O   V I S T A-->
+            <form string="Boletas Chatarra" create="0">
+                <header>
+                    <button name="btn_registrar_clasificacion" type="object" class="btn-primary" string="Registrar Clasificacion" attrs="{'invisible':['|',('estatus_camion_ch','=', False), ('estatus_camion_ch','!=','stts_cd')]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_tittle">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group name="group_boletachat">
+                        <group name="col1">
+                            <field name="ciclo_camion_id" readonly="1" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="pase_acceso_ch" readonly="1" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="placas_vehiculo_ch" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="nombre_chofer_ch" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="fecha_registro_ch" readonly="1"/>
+                            <field name="estatus_camion_ch"/>
+                            <field name="nombre_clasificador" readonly="1" widget="many2one_avatar_user"/>
+                            <field name="company_id" readonly="1" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="clasificacion_chatarra" domain="[('categ_id','=','Chatarra')]" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}" options="{'no_create': True, 'no_open':True}"/>
+                            <field name="peso_remisionado_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                            <field name="impureza_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                            <field name="merma_chatarra" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                            <!-- <field name="ubicacion_destino_ch"></field> -->
+                            <field name="notas_clasificador" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                        </group>
+                        <group name="col2" string="Infomacion vehiculo">
+                            <field name="ancho_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                            <field name="largo_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                            <field name="alto_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                            <field name="volumen_caja_ch" readonly="1" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                            <field name="densidad_remisionada_ch" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <!--C H A T T E R-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_boletas_chatarra_tree" model="ir.ui.view">
+        <field name="name">boleta_chatarra.tree.gsimec</field>
+        <field name="model">boletas.chatarra</field>
+        <field name="arch" type="xml">
+            <!--C O N T E N I D O   V I S T A-->
+            <tree string="Boletas Chatarra" create="0">
+                <field name="name"></field>
+                <field name="pase_acceso_ch"/>
+                <field name="nombre_chofer_ch"/>
+                <field name="placas_vehiculo_ch"/>
+                <!-- <field name="estatus_camion_ch"></field> -->
+                <!-- <field name="nombre_clasificador"></field> -->
+                <!-- <field name="company_id"></field> -->
+            </tree>
+        </field>
+    </record>
+    <!-- A C T I O N   W I N D O W -->
+    <record id="boletas_chatarra_action" model="ir.actions.act_window">
+        <field name="name">Boletas Chatarra</field>
+        <field name="res_model">boletas.chatarra</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- M E N U   I T E M -->
+    <menuitem name="Boletas de Chatarra" id="menu_boletas_chatarra" parent="stock.menu_stock_root" action="boletas_chatarra_action" sequence="10"/>
+</odoo>

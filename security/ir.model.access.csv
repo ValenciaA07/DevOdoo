@@ -1,0 +1,8 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_registro_entrada,access_registro_entrada,model_registro_entrada,base.group_user,1,1,1,1
+access_ciclo_camion,access_ciclo_camion,model_ciclo_camion,base.group_user,1,1,1,1
+access_operadores_list,access_operadores_list,model_operadores_list,base.group_user,1,1,1,1
+access_unidadestransporte_list,access_unidadestransporte_list,model_unidadestransporte_list,base.group_user,1,1,1,1
+access_bascula,access_bascula,model_bascula,base.group_user,1,1,1,1
+access_boletas_chatarra,access_boletas_chatarra,model_boletas_chatarra,base.group_user,1,1,1,1
+access_boletas_almacen,access_boletas_almacen,model_boletas_almacen,base.group_user,1,1,1,1

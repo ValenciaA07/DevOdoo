@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crear_boletas" model="base.automation">
+        <field name="name">Crear boletas al iniciar ciclo</field>
+        <field name="model_id" ref="ciclo.camion"/>
+        <field name="state">code</field>
+        <field name="trigger">on_create</field>
+        <field name="active" eval="True" />
+        <field name="activity_type_id" ref="mail.mail_activity_data_todo" />
+    </record>
+</odoo>

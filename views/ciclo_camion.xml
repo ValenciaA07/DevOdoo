@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ciclo_camion_form" model="ir.ui.view">
+        <field name="name">ciclo.camion.form.gsimec</field>
+        <field name="model">ciclo.camion</field>
+        <field name="arch" type="xml">
+            <!--C O N T E N I D O   V I S T A-->
+            <form string="Ciclo camion"  create="0">
+                <header>
+                    <field widget="statusbar" options="{'clickable': False}" name="estatus_camion_cc" force_save="True"></field>
+                    <button name="btn_ConfirmarBoleta" type="object" class="btn-primary" string="Confirmar Boleta" attrs="{'invisible': [('estatus_camion_cc', '!=', 'stts_v2')]}"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button class="oe_stat_button" icon="fa-ticket" type="object" name="get_purchase_order">
+                            <field widget="statinfo" name="purchase_order_count" string="Orden de Compra" attrs="{'invisible': [('purchase_order_count','=',0)]}"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-truck" type="object" name="get_stock_picking">
+                            <field widget="statinfo" name="stock_picking_count" string="Recepción" attrs="{'invisible': [('stock_picking_count','=',0)]}"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group name="group_header">
+                        <group name="col1">
+                            <field name="responsable_cc" readonly="1" options="{'no_open':True}" widget="many2one_avatar_user"/>
+                            <field name="contacto_cc" readonly="1" options="{'no_open':True}"/>
+                            <field name="company_id" readonly="1" options="{'no_open':True}"/>
+                            <field name="tipo_operacion_cc" readonly="1" options="{'no_open':True}"/>
+                            <field name="contrato_compra_cc" attrs="{'invisible':[('prefijo_operacion_cc','!=','IN-Chatarra')], 'required':[('prefijo_operacion_cc','=','IN-Chatarra')]}"/>
+                            <field name="orden_compra_peso_cc" attrs="{'invisible':[('prefijo_operacion_cc','!=','IN-Insumos')], 'required':[('prefijo_operacion_cc','=','IN-Insumos')]}"/>
+                            <field name="prefijo_operacion_cc"/>
+                            <field name="estatus_vigilancia_cc"/>
+                            <field name="estatus_camion_cc" readonly="1"/>
+                        </group>
+                        <notebook>
+                            <page name="vigilancia_ciclo" string="Vigilancia">
+                                <group name="name">
+                                    <field name="pase_acceso_cc" readonly="1" options="{'no_open':True}"></field>
+                                    <field name="fecha_ingreso_cc"/>
+                                    <field name="fecha_salida_cc"/>
+                                    <field name="vigilante_cc" options="{'no_create': True, 'no_open':True}"/>
+                                    <field name="placas_tracto_cc" options="{'no_open':True}"/>
+                                    <field name="chofer_cc" options="{'no_create': True, 'no_open':True}"/>
+                                    <field name="placas_remolque_cc" options="{'no_create': True, 'no_open':True}"/>
+
+                                </group>
+                            </page>
+
+                            <page name="bascula_ciclo" string="Bascula">
+                                <group name="name">
+                                    <field name="boleta_bascula_id" readonly="1" options="{'no_open':True}"></field>
+                                    <field name="basculista_cc" options="{'no_create': True, 'no_open':True}"/>
+                                    <field name="fecha_primer_pesada_cc"/>
+                                    <field name="fecha_segunda_pesada_cc"/>
+                                    <field name="placas_tracto_cc" options="{'no_open':True}"/>
+                                    <field name="producto_registrado_cc" options="{'no_create': True, 'no_open':True}"/>
+                                    <field name="peso_bruto_cc"/>
+                                    <field name="peso_tara_cc"/>
+                                    <field name="peso_neto_cc"/>
+                                </group>
+                            </page>
+                            <page name="boletas_chatarra_ciclo" string="Boletas Chatarra">
+                                <group name="name">
+                                    <field name="boleta_chatarra_cc" readonly="1" options="{'no_open':True}"/>
+                                    <field name="clasificador_cc" options="{'no_create': True, 'no_open':True}"/>
+                                    <field name="clasificacion_chat_cc" options="{'no_open':True}"/>
+                                    <field name="volumen_caja_cc"/>
+                                    <field name="densidad_caja_cc"/>
+                                    <field name="notas_clasificador_cc"/>
+                                </group>
+                            </page>
+                            <page name="boletas_almacen_ciclo" string="Boletas Almacen">
+                                <group name="name">
+                                    <field name="boleta_almacen_cc" readonly="1" options="{'no_open':True}"/>
+                                    <field name="producto_recibido_cc" options="{'no_create': True, 'no_open':True}"/>
+                                    <field name="almacen_cc"/>
+                                    <field name="almacenista_cc" options="{'no_open':True}"/>
+                                    <field name="fecha_inicial_cc"/>
+                                    <field name="fecha_final_cc"/>
+                                </group>
+                            </page>
+                            <page name="otra_informacion_cc" string="Otra Informacion">
+                                <group name="name" string="string">
+                                    <field name="orden_compra_id" readonly="1" options="{'no_open':True}"/>
+                                    <field name="trasladar_id" readonly="1" options="{'no_open':True}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+                <!--C H A T T E R-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--V I S T A   L I S T A-->
+    <record id="view_ciclo_camion_tree" model="ir.ui.view">
+        <field name="name">ciclo_camion.tree.gsimec</field>
+        <field name="model">ciclo.camion</field>
+        <field name="arch" type="xml">
+
+            <!--C O N T E N I D O   V I S T A-->
+            <tree string="Registro de Entrada"  create="0">
+                <field name="name"/>
+                <field name="estatus_camion_cc"/>
+                <field name="pase_acceso_cc"/>
+                <field name="estatus_vigilancia_cc" /> 
+                <field name="placas_tracto_cc"/> 
+                <field name="responsable_cc"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- A C T I O N   W I N D O W -->
+    <record id="ciclo_camion_action" model="ir.actions.act_window">
+        <field name="name">Ciclo Camion</field>
+        <field name="res_model">ciclo.camion</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- M E N U   I T E M -->
+    <menuitem name="Ciclo Camion" id="menu_ciclo_camion" parent="stock.menu_stock_root" action="ciclo_camion_action" sequence="10"/>
+</odoo>
