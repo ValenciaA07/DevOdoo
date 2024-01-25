@@ -12,7 +12,7 @@ class RegistroEntrada(models.Model):
 
     name = fields.Char(string='Referencia', required=True, copy=False, readonly=True, default='New')
     tipo_movimiento_id = fields.Many2one(comodel_name='stock.picking.type', string='Tipo de operacion')
-    contacto_id = fields.Many2one(comodel_name='res.partner', string='Contacto')
+    contacto_id = fields.Many2one(comodel_name='res.partner', string='Contacto', required=True)
     chofer_vg = fields.Many2one(comodel_name='operadores.list', string='Chofer')
     ine_vg = fields.Char(related='chofer_vg.ine', string='Ine')
     curp_vg = fields.Char(related='chofer_vg.curp', string='Curp')
@@ -31,13 +31,26 @@ class RegistroEntrada(models.Model):
     nombre_ingreso = fields.Many2one('res.users', 'Ingreso', index=True)
     company_id = fields.Many2one('res.company', 'Empresa', required=True, index=True, default=lambda self: self.env.company)
     notas_vigilancia = fields.Char(string='Notas Vigilancia')
-    producto_remisionado = fields.Char(string='Producto Remisionado')
+    producto_remisionado = fields.Many2one(comodel_name='product.product',string='Producto a Trasladar')
     origen_producto = fields.Char(string='Origen del Producto')
     destino_producto = fields.Char(string='Destino del Producto')
     prefijo_operacion = fields.Char(related='tipo_movimiento_id.sequence_code', string='Prefijo secuencia', readonly=True)
     ciclo_camion_ids = fields.One2many('ciclo.camion','pase_acceso_cc', string='Ciclo camion ids')
     estatus_camion_vg = fields.Selection(related='ciclo_camion_ids.estatus_camion_cc', string='Estatus Camion')
     transportes_ciclo_camion_count = fields.Integer(compute="_compute_transporte_count")
+    categoria_product = fields.Char(string='Categoria', compute='_compute_categoria')
+    estado_unidad = fields.Selection(selection=[('stts_ps', 'Sin Problema'),('stts_sc', 'sin Chofer'),('stts_dsp', 'Descompuesto'),('stts_cst', 'Castigado'),], string='Estado de Unidad')
+
+    @api.depends('prefijo_operacion')
+    def _compute_categoria(self):
+        if self.prefijo_operacion == 'IN-Chatarra':
+            self.categoria_product = 'Chatarra'
+        elif self.prefijo_operacion == 'IN-Insumos':
+            self.categoria_product = 'Insumos'
+        elif self.prefijo_operacion == 'IN-Refacciones':
+            self.categoria_product = 'Refacciones'
+        else:
+            self.categoria_product = False
 
     def btn_preregistro(self):
         self.estatus_vigilancia = 'stts_pr'

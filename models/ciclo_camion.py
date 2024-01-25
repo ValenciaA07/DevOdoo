@@ -122,7 +122,7 @@ class CicloCamion(models.Model):
     @api.model
     def create(self,vals):
         if vals.get('name', 'New') == 'New':
-           vals['name']= self.env['ir.sequence'].next_by_code('ciclo.camion') or 'New'
+           vals['name']= self.env['ir.sequence'].next_by_code('referencia.camion') or 'New'
         return super(CicloCamion, self).create(vals)
 
     def crear_boletas(self):
@@ -180,9 +180,3 @@ class CicloCamion(models.Model):
             'domain': [('ciclo_camion_id', '=', self.id)],
             'context': {'search_default_ciclo_camion_id': self.id,'default_ciclo_camion_id': self.id},
         }
-
-    
-
-            
-
-    

@@ -71,6 +71,20 @@
             </tree>
         </field>
     </record>
+    <!-- V I S T A  S E R C H -->
+    <record id="view_bascula_search" model="ir.ui.view">
+        <field name="name">bascula.search.gsimec</field>
+        <field name="model">bascula</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="placas_vehiculo"/>
+                <field name="referencia_vigilancia"/>
+                <field name="nombre_basculista_b"/>
+                <field name="nombre_chofer"/>
+             </search>
+        </field>
+    </record>
     <!-- A C T I O N   W I N D O W -->
     <record id="bascula_action" model="ir.actions.act_window">
         <field name="name">Bascula</field>

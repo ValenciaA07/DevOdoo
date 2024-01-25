@@ -28,7 +28,7 @@
                     <group name="group_header">
                         <group name="col1">
                             <field name="tipo_movimiento_id" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}" options="{'no_create': True, 'no_open': True}"/>
-                            <field name="contacto_id" required="1" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}" options="{'no_open':True}"/>
+                            <field name="contacto_id" required="1" domain="[('category_id.name','=', categoria_product)]" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}" options="{'no_open':True}"/>
                             <field name="estatus_autorizacion" readonly="1"/>
                             <field name="fecha_preregistro" readonly="1"/>
                             <field name="fecha_requerido" readonly="1"/>
@@ -40,20 +40,22 @@
                         </group>
                         <group name="col2" position="left">
                             <field name="chofer_vg" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}" options="{'no_create': True, 'no_open': True}"/>
-                            <field name="ine_vg" readonly="1" required="1"/>
-                            <field name="curp_vg" readonly="1"/>
+                            <field name="ine_vg" widget="code" readonly="1" required="1"/>
+                            <field name="curp_vg" widget="code" readonly="1"/>
                             <field name="licencia_vg" readonly="1"/>
                             <field name="placas_vehiculo_vg" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}" options="{'no_open':True}" domain="[('tipo_unidad','=','TRC')]"/>
                             <field name="tipo_unidad_vg" readonly="1"/>
                             <field name="placas_remolque_vg" options="{'no_create': True, 'no_open':True}" domain="[('tipo_unidad','=','RML')]" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}"/>
+                            <field name="estado_unidad" widget="code" decoration-info="1"/>
                             <field name="nombre_vigilante" readonly="1" widget="many2one_avatar_user"/>
                             <field name="nombre_autoriza" readonly="1" widget="many2one_avatar_user"/>
                             <field name="nombre_ingreso" readonly="1" widget="many2one_avatar_user"/>
-                            <field name="producto_remisionado" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}"/>
+                            <field name="producto_remisionado" domain="['|', ('product_tmpl_id.categ_id.parent_id','=', categoria_product), ('categ_id','=', categoria_product)]" options="{'no_create': True, 'no_open':True}" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}"/>
                             <field name="origen_producto" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}"/>
                             <field name="destino_producto" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}"/>
                             <field name="prefijo_operacion" invisible="1"/>
                             <field name="ciclo_camion_ids" invisible="1"/>
+                            <field name="categoria_product" invisible="1"/>
                         </group>
                     </group>
                 </sheet>
@@ -78,6 +80,7 @@
                 <field name="tipo_movimiento_id"/>
                 <field name="producto_remisionado"/>
                 <field name="estatus_vigilancia" />
+                <field name="estado_unidad" decoration-info="1" />
                 <field name="chofer_vg"/>
                 <field name="nombre_vigilante"/>
                 <field name="nombre_autoriza"/>
@@ -89,11 +92,25 @@
             </tree>
         </field>
     </record>
+
+    <!-- V I S T A  S E R C H -->
+    <record id="view_registro_entrada_search" model="ir.ui.view">
+        <field name="name">registro_entrada.search.gsimec</field>
+        <field name="model">registro.entrada</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="registro_de_entrada" string="Tipo de Movimiento" context="{'group_by': 'tipo_movimiento_id'}"/>
+                <filter name="abiertas" string="Boletas Abiertas" domain="[('estatus_vigilancia','=','stts_ev')]"/>
+            </search>
+        </field>
+    </record>
     <!-- A C T I O N   W I N D O W -->
     <record id="registro_action_entrada" model="ir.actions.act_window">
         <field name="name">Registro de Entrada</field>
         <field name="res_model">registro.entrada</field>
         <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_abiertas': 1}</field>
     </record>
     <!-- M E N U   I T E M -->
     <menuitem name="Registro Entrada" id="menu_registro_entrada" parent="stock.menu_stock_root" action="registro_action_entrada" sequence="10"/>

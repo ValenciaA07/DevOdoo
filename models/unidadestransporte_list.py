@@ -31,8 +31,8 @@ class UnidadesTransporteList(models.Model):
     ('GPLUTC','Grúa de Pluma Tipo C'), ('GPLUTD','Grúa de Pluma Tipo D'), ('GPLATA','Grúa de Plataforma Tipo A'),('GPLATB','Grúa de Plataforma Tipo B'),
     ('GPLATC','Grúa de Plataforma Tipo C'),('GPLATD','Grúa de Plataforma Tipo D')], string='Configuración Vehicular', required= True)
     activo = fields.Boolean(string= 'Activo', default= True)  
-    comentarios = fields.Char(string= 'Observaciones')
-    comentarios2 = fields.Char(string= 'Comentarios')
+    descripcion_unidad = fields.Char(string= 'Descripcion de unidad')
+    motivo_inactividad = fields.Char(string= 'Observaciones')
     fecha_alta = fields.Datetime(string= 'Fecha alta', readonly=True, default=fields.Datetime.now)
     fecha_modificacion = fields.Datetime(string= 'Fecha Modificación', readonly=True, default=fields.Datetime.now)
     user_id = fields.Many2one('res.users', string="Usuario", check_company=True, domain="[('company_ids', 'in', company_id)]", default=lambda self: self.env.uid)

@@ -23,6 +23,12 @@
         "views/stock_picking_views.xml",
         "views/purchase_order_views.xml"
     ],
+    'assets':{
+        "web.assets_backend":[
+            "/simec_ciclo_camion/static/src/js/code_fields.js",
+            "/simec_ciclo_camion/static/src/xml/widget_file.xml",
+        ]
+    },
     'license': "LGPL-3",
     "installable": True,
     "application": False,

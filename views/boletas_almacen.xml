@@ -57,6 +57,18 @@
             </tree>
         </field>
     </record>
+    <!-- V I S T A  S E R C H -->
+    <record id="view_boletas_almacen_search" model="ir.ui.view">
+        <field name="name">boletas_almacen.search.gsimec</field>
+        <field name="model">boletas.almacen</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="pase_acceso_alm"/>
+                <field name="nombre_almacenista"/>
+          </search>
+        </field>
+    </record>
     <!-- A C T I O N   W I N D O W -->
     <record id="boleta_almacen_action" model="ir.actions.act_window">
         <field name="name">Boleta Almacen</field>

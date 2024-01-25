@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="addon_name.CodeField" owl="1">        
+        <span t-if="props.readonly" t-esc="props.value"/>        
+        <input t-else="" t-att-value="props.value" t-att-placeholder="props.placeholder" class="o_input"/>
+        <div class="p-3 mb-2 bg-gradient-success text-info"/>
+      </t>
+</templates>

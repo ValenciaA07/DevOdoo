@@ -30,14 +30,13 @@
                             <field name="peso_remisionado_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
                             <field name="impureza_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
                             <field name="merma_chatarra" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
-                            <!-- <field name="ubicacion_destino_ch"></field> -->
                             <field name="notas_clasificador" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
                         </group>
                         <group name="col2" string="Infomacion vehiculo">
-                            <field name="ancho_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
-                            <field name="largo_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
-                            <field name="alto_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
-                            <field name="volumen_caja_ch" readonly="1" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')]}"/>
+                            <field name="ancho_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')], 'required':[('peso_remisionado_ch','>',0)]}"/>
+                            <field name="largo_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')], 'required':[('peso_remisionado_ch','>',0)]}"/>
+                            <field name="alto_caja_ch" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')], 'required':[('peso_remisionado_ch','>',0)]}"/>
+                            <field name="volumen_caja_ch" readonly="1" attrs="{'readonly':[('estatus_camion_ch','!=','stts_cd')], 'required':[('peso_remisionado_ch','>',0)]}"/>
                             <field name="densidad_remisionada_ch" readonly="1"/>
                         </group>
                     </group>
@@ -60,10 +59,24 @@
                 <field name="pase_acceso_ch"/>
                 <field name="nombre_chofer_ch"/>
                 <field name="placas_vehiculo_ch"/>
-                <!-- <field name="estatus_camion_ch"></field> -->
-                <!-- <field name="nombre_clasificador"></field> -->
-                <!-- <field name="company_id"></field> -->
+                <field name="estatus_camion_ch"></field>
+                <field name="nombre_clasificador"></field>
+                <field name="company_id"></field>
             </tree>
+        </field>
+    </record>
+    <!-- V I S T A  S E R C H -->
+    <record id="view_boletas_chatarra_search" model="ir.ui.view">
+        <field name="name">boletas_chatarra.search.gsimec</field>
+        <field name="model">boletas.chatarra</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="placas_vehiculo_ch"/>
+                <field name="pase_acceso_ch"/>
+                <field name="nombre_clasificador"/>
+                <field name="nombre_chofer_ch"/>
+             </search>
         </field>
     </record>
     <!-- A C T I O N   W I N D O W -->

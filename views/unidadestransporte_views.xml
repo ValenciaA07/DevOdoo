@@ -22,8 +22,8 @@
                         <field name="modelo"></field>
                         <field name="configuracion"></field>
                         <field name="activo"></field>
-                        <field name="comentarios" placeholder='Color de unidad, situacion especial, etc'></field>
-                        <field name="comentarios2" placeholder='Motivo de Inactivar la Unidad'></field>
+                        <field name="descripcion_unidad" placeholder='Color de unidad, situacion especial, etc'></field>
+                        <field name="motivo_inactividad" placeholder='Motivo de Inactivar la Unidad'></field>
                         <field name="fecha_alta"></field>
                         <field name="fecha_modificacion"></field>
                         <field name="status_registrado"></field>
@@ -49,7 +49,7 @@
                 <field name="fecha_alta"></field>
                 <field name="fecha_modificacion"></field>
                 <field name="configuracion"></field>
-                <field name="comentarios"></field>
+                <field name="descripcion_unidad"></field>
             </tree>
         </field>
     </record>

@@ -23,7 +23,7 @@ class Bascula(models.Model):
     nombre_basculista_b = fields.Many2one('res.users', string='Basculista', index=True, default=lambda self: self.env.user)
     company_id = fields.Many2one('res.company', string='Empresa', required=True, index=True, default=lambda self: self.env.company)
     notas_basculista = fields.Char('Notas Basculista')
-    producto_remisionado_b = fields.Char(related='ciclo_camion_id.pase_acceso_cc.producto_remisionado', string='Producto Remisionado')
+    producto_remisionado_b = fields.Many2one(related='ciclo_camion_id.pase_acceso_cc.producto_remisionado', string='Producto Remisionado')
     producto_registrado_b = fields.Many2one(comodel_name='product.product', string='Producto Registrado') 
     peso_bruto_b = fields.Float(string='Peso Bruto')
     peso_tara_b = fields.Float(string='Peso Tara')
@@ -56,9 +56,17 @@ class Bascula(models.Model):
 
     def btn_peso_bruto(self):
         # raise UserError("Peso Bruto")
+        if self.peso_bruto_b == 0:
+            raise UserError("El peso bruto no puede ser 0")
+            
+        if self.peso_bruto_b < 0:
+            self.peso_bruto_b == 0
+            raise UserError("No puede haber negativos")
+            
         if self.peso_bruto_b >= 60000:
+            self.peso_bruto_b = 0
             raise UserError("Peso bruto excedió el limite 60 TN maximo")
-            self.peso_bruto_b == ''
+            
         self.ciclo_camion_id.estatus_camion_cc = 'stts_cd'
         self.fecha_primer_pesada_b = fields.Datetime.now()
 
@@ -87,6 +95,11 @@ class Bascula(models.Model):
         if self.ciclo_camion_id.tipo_operacion_cc.sequence_code == 'IN-Insumos':
             self.ciclo_camion_id.estatus_camion_cc = 'stts_ra'
             self.paso_siguiente = 'salida_vigilancia'
+
+        if self.peso_neto_b < 0:
+            raise UserError("No puede haber negativos")
+        if self.peso_bruto_b == self.peso_neto_b:
+            raise UserError("Error en validar el peso")
 
     def btn_nuevo_ciclo(self):
         #Recibir producto
