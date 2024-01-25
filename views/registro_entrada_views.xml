@@ -40,13 +40,13 @@
                         </group>
                         <group name="col2" position="left">
                             <field name="chofer_vg" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}" options="{'no_create': True, 'no_open': True}"/>
-                            <field name="ine_vg" widget="code" readonly="1" required="1"/>
-                            <field name="curp_vg" widget="code" readonly="1"/>
+                            <field name="ine_vg" readonly="1" required="1"/>
+                            <field name="curp_vg" readonly="1"/>
                             <field name="licencia_vg" readonly="1"/>
                             <field name="placas_vehiculo_vg" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}" options="{'no_open':True}" domain="[('tipo_unidad','=','TRC')]"/>
                             <field name="tipo_unidad_vg" readonly="1"/>
                             <field name="placas_remolque_vg" options="{'no_create': True, 'no_open':True}" domain="[('tipo_unidad','=','RML')]" attrs="{'readonly':['|',('estatus_vigilancia','=','stts_ep'),('estatus_vigilancia','=','stts_sv')]}"/>
-                            <field name="estado_unidad" widget="code" decoration-info="1"/>
+                            <field name="estado_unidad" decoration-info="1"/>
                             <field name="nombre_vigilante" readonly="1" widget="many2one_avatar_user"/>
                             <field name="nombre_autoriza" readonly="1" widget="many2one_avatar_user"/>
                             <field name="nombre_ingreso" readonly="1" widget="many2one_avatar_user"/>
